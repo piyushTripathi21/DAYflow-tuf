@@ -1,151 +1,60 @@
-# 📅 Chronos — Interactive Calendar Component
+# Dayflow - Interactive Calendar Component
 
-A premium, feature-rich interactive wall calendar built with **Next.js 14**, designed as a frontend engineering challenge submission.
+An interactive wall calendar built with Next.js for the Frontend Engineering Challenge.
 
-![Calendar Preview](./docs/preview.png)
-
-## ✨ Features
-
-### Core Requirements
-- **🖼️ Wall Calendar Aesthetic** — Beautiful seasonal hero images with a physical calendar feel
-- **📆 Day Range Selector** — Click-to-select date ranges with visual start/end/in-between states and hover preview
-- **📝 Integrated Notes** — Per-date notes with pin, delete, and keyboard shortcuts (Enter to save)
-- **📱 Fully Responsive** — Desktop (side-by-side panels) → Mobile (stacked, touch-optimized)
-
-### Unique Standout Features
-- **🎨 4 Premium Themes** — Midnight (dark), Daylight (light), Glassmorphism, Retro — all with smooth CSS transitions
-- **😊 Mood Tracker** — Log daily moods with emoji picker + monthly mood heatmap
-- **🍅 Pomodoro Timer** — Floating 25/5 focus timer with SVG progress ring and sound notifications
-- **📊 Monthly Analytics** — Dashboard with notes count, focus hours, mood streaks, and mood distribution chart
-- **🔍 Smart Search** — Ctrl+K command palette to search all notes across all months
-- **🎏 Holiday Markers** — Indian public holidays with emoji badges, tooltips, and countdown to next holiday
-- **🔄 3D Flip Animation** — Page-turn transition when switching months
-- **💾 Persistent Data** — All notes, moods, and sessions saved to localStorage
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 14 (App Router) |
-| Language | JavaScript (ES2024) |
-| Styling | Vanilla CSS with CSS Custom Properties |
-| State Management | React Context + useReducer |
-| Icons | Lucide React |
-| Typography | Inter + Playfair Display (Google Fonts) |
-| Persistence | localStorage |
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+ 
-- npm 9+
-
-### Installation
+## How to Run
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/interactive-calendar.git
-cd interactive-calendar
-
-# Install dependencies
+git clone https://github.com/piyushTripathi21/DAYflow-tuf.git
+cd DAYflow-tuf
 npm install
-
-# Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Then open http://localhost:3000 in your browser.
 
-### Production Build
+## What I Built
 
-```bash
-npm run build
-npm start
-```
+I went for a wall calendar look — there's a big seasonal hero image on the left that changes based on the month (spring, summer, autumn, winter), and the calendar grid sits on the right side. On mobile it stacks vertically.
 
-## 📖 Usage Guide
+### Core Features
 
-### Date Selection
-1. **Single Date**: Click any date to select it
-2. **Date Range**: Click a start date, then click an end date to select a range
-3. **Clear Selection**: Click the "Clear" button in the selection bar
+- **Date range selection** — click a start date, then an end date. The range highlights in between with different colors for start, end, and middle dates. There's also a hover preview while selecting.
+- **Notes** — each date can have multiple notes. You can pin important ones and delete old ones. Notes persist in localStorage so they survive page reloads.
+- **Responsive layout** — desktop is side-by-side, tablet/mobile is stacked. Tested down to 380px width.
 
-### Notes
-- Click the 📝 icon in the header to open the Notes panel
-- Select a date, then type and press Enter (or click Add Note)
-- Pin important notes with the 📌 button
-- Delete notes with the 🗑️ button
+### Extra Features I Added
 
-### Mood Tracking
-- Click the 😊 icon in the header
-- Select a date, then pick your mood emoji
-- View your monthly mood heatmap below the picker
+- **Mood tracker** — log how you're feeling each day with emojis, and see a monthly heatmap of your moods
+- **Pomodoro timer** — a floating 25/5 focus timer with a circular progress ring. It plays a beep when done and logs sessions per date
+- **Theme switching** — 4 themes (dark, light, glassmorphism, retro). Uses CSS custom properties so switching is instant with no re-renders
+- **Holiday markers** — shows Indian public holidays on the calendar with emoji badges and tooltips. Also has a countdown banner to the next holiday
+- **Search** — press Ctrl+K to search across all your notes from any month
+- **Analytics** — a small dashboard showing notes count, focus time, mood streaks etc. for the current month
+- **Flip animation** — 3D page-turn effect when you navigate between months
 
-### Pomodoro Timer
-- Click the ⏱️ icon to open the floating timer
-- 25 minutes of focus → 5 minutes break
-- Sessions are auto-logged to the selected date
-- Audio notification when timer completes
+## Tech Choices
 
-### Search
-- Press `Ctrl+K` (or `⌘+K` on Mac) to open search
-- Type to instantly search across all notes
-- Click a result to jump to that date
+- **Next.js (App Router)** — since the assignment asked for React/Next.js
+- **Vanilla CSS with CSS variables** — I avoided Tailwind/styled-components because CSS custom properties let me do instant theme switching without any JS re-renders. All the design tokens (colors, spacing, shadows) are defined as variables
+- **React Context + useReducer** — the date selection logic is basically a state machine (idle → selecting → range complete), so useReducer felt more natural than a bunch of useState calls
+- **localStorage** — for saving notes, moods, and pomodoro sessions. No backend needed
+- **Lucide React** — lightweight icon library, much smaller than Font Awesome
+- **Google Fonts (Inter + Playfair Display)** — Inter for UI text, Playfair for headings to give it that premium calendar feel
 
-### Themes
-- Click the 🎨 palette icon in the header
-- Choose from 4 themes: Midnight, Daylight, Glassmorphism, Retro
-- Theme preference is saved automatically
-
-## 🏗️ Architecture
+## Project Structure
 
 ```
 src/
-├── app/                  # Next.js app router
-│   ├── layout.js         # Root layout with SEO metadata
-│   ├── page.js           # Main page (client component)
-│   └── globals.css       # Design system + all styles
-├── components/           # UI components
-│   ├── CalendarApp.js    # Main orchestrator
-│   ├── CalendarGrid.js   # Month grid + range selection
-│   ├── HeroImage.js      # Seasonal hero with flip animation
-│   ├── NotesPanel.js     # Notes CRUD interface
-│   ├── MoodTracker.js    # Mood picker + heatmap
-│   ├── PomodoroTimer.js  # Focus timer with progress ring
-│   ├── Analytics.js      # Monthly stats dashboard
-│   ├── SearchModal.js    # Command palette search
-│   ├── ThemeSwitcher.js  # Theme dropdown
-│   └── HolidayBanner.js  # Holiday countdown
-├── context/              # State management
-│   ├── CalendarContext.js # Calendar state (useReducer)
-│   └── ThemeContext.js    # Theme state + CSS variables
-├── hooks/
-│   └── useLocalStorage.js # localStorage persistence hook
-└── utils/
-    ├── dateUtils.js       # Date math + formatting
-    └── holidays.js        # Indian holiday data
+├── app/              → layout, page, global styles
+├── components/       → all UI components (CalendarGrid, NotesPanel, MoodTracker, etc.)
+├── context/          → CalendarContext (state) + ThemeContext (themes)
+├── hooks/            → useLocalStorage custom hook
+└── utils/            → date helpers, holiday data
 ```
 
-### Design Decisions
-- **CSS Custom Properties** over CSS-in-JS for instant theme switching without re-renders
-- **useReducer** over useState for complex state transitions (date selection state machine)
-- **No external UI library** — every component is hand-crafted for full control
-- **localStorage** for persistence — no backend needed, instant load
-- **CSS animations** over JS animation libraries — better performance, no bundle bloat
+## Responsive Breakpoints
 
-## 📱 Responsive Breakpoints
-
-| Breakpoint | Layout |
-|---|---|
-| > 968px | 2-column grid (hero + panels left, calendar right) |
-| 640–968px | Single column, stacked |
-| < 640px | Compact mobile with reduced padding |
-| < 380px | Extra-compact for small phones |
-
-## 📝 License
-
-MIT
-
----
-
-Built with ❤️ for the Frontend Engineering Challenge
+- Desktop (>968px): two-column layout
+- Tablet (640-968px): single column
+- Mobile (<640px): compact with smaller fonts and padding
